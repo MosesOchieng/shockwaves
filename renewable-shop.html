@@ -175,6 +175,87 @@
         </div>
     </div>
 
+    <!-- Checkout Modal -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h2>🛒 Complete Your Order</h2>
+                <button class="close-checkout" onclick="closeCheckout()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="checkout-body">
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div class="order-items" id="checkoutItems">
+                        <!-- Order items will be loaded here -->
+                    </div>
+                    <div class="order-total">
+                        <span>Total Amount:</span>
+                        <span class="total-price" id="checkoutTotal">$0.00</span>
+                    </div>
+                </div>
+                <form action="https://formspree.io/f/xqallnle" method="POST" class="checkout-form" id="checkoutForm">
+                    <input type="hidden" name="order_type" value="Renewable Energy Shop Order">
+                    <input type="hidden" name="order_items" id="orderItemsInput">
+                    <input type="hidden" name="order_total" id="orderTotalInput">
+                    
+                    <div class="form-section">
+                        <h3>Personal Information</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" name="full_name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Delivery Information</h3>
+                        <div class="form-group">
+                            <label for="address">Delivery Address *</label>
+                            <textarea id="address" name="delivery_address" rows="3" required></textarea>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <input type="text" id="city" name="city" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="postalCode">Postal Code</label>
+                                <input type="text" id="postalCode" name="postal_code">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Additional Information</h3>
+                        <div class="form-group">
+                            <label for="notes">Special Instructions or Notes</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="Any special requirements or additional information..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="checkout-actions">
+                        <button type="button" class="btn-secondary" onclick="closeCheckout()">Cancel</button>
+                        <button type="submit" class="btn-primary" id="submitOrder">
+                            <i class="fas fa-paper-plane"></i>
+                            Submit Order
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">

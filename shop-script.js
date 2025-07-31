@@ -286,23 +286,130 @@ function checkout() {
         return;
     }
 
-    // Create order summary
-    let orderSummary = 'Order Summary:\n\n';
-    cart.forEach(item => {
-        orderSummary += `${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()}\n`;
-    });
-    orderSummary += `\nTotal: $${cartTotal.toLocaleString()}`;
-
-    // Show order summary and contact info
-    const message = `${orderSummary}\n\nPlease contact us to complete your order:\nPhone: +254 XXX XXX XXX\nEmail: shockwaveteknologies@gmail.com\nWhatsApp: +254 XXX XXX XXX`;
+    // Populate checkout modal
+    populateCheckoutModal();
     
-    alert(message);
+    // Show checkout modal
+    const checkoutModal = document.getElementById('checkoutModal');
+    checkoutModal.style.display = 'block';
     
-    // Clear cart after checkout
-    cart = [];
-    updateCart();
+    // Close cart sidebar
     toggleCart();
-    showNotification('Order submitted! We will contact you soon.', 'success');
+}
+
+// Populate checkout modal with cart items
+function populateCheckoutModal() {
+    const checkoutItems = document.getElementById('checkoutItems');
+    const checkoutTotal = document.getElementById('checkoutTotal');
+    const orderItemsInput = document.getElementById('orderItemsInput');
+    const orderTotalInput = document.getElementById('orderTotalInput');
+
+    // Clear previous items
+    checkoutItems.innerHTML = '';
+
+    // Add cart items to checkout
+    cart.forEach(item => {
+        const orderItem = document.createElement('div');
+        orderItem.className = 'order-item';
+        orderItem.innerHTML = `
+            <div class="order-item-name">${item.name}</div>
+            <div class="order-item-details">
+                <div class="order-item-price">$${(item.price * item.quantity).toLocaleString()}</div>
+                <div class="order-item-quantity">Qty: ${item.quantity}</div>
+            </div>
+        `;
+        checkoutItems.appendChild(orderItem);
+    });
+
+    // Update total
+    checkoutTotal.textContent = `$${cartTotal.toLocaleString()}`;
+
+    // Set hidden inputs for form submission
+    const orderItemsText = cart.map(item => `${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()}`).join('\n');
+    orderItemsInput.value = orderItemsText;
+    orderTotalInput.value = cartTotal.toLocaleString();
+}
+
+// Close checkout modal
+function closeCheckout() {
+    const checkoutModal = document.getElementById('checkoutModal');
+    checkoutModal.style.display = 'none';
+}
+
+// Handle form submission
+document.addEventListener('DOMContentLoaded', function() {
+    const checkoutForm = document.getElementById('checkoutForm');
+    if (checkoutForm) {
+        checkoutForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitOrder');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            // Get form data
+            const formData = new FormData(checkoutForm);
+            
+            // Add additional order information
+            formData.append('order_date', new Date().toLocaleDateString());
+            formData.append('order_time', new Date().toLocaleTimeString());
+            formData.append('shop_page', currentPage);
+
+            // Submit to Formspree
+            fetch('https://formspree.io/f/xqallnle', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Show success message
+                    showCheckoutSuccess();
+                    
+                    // Clear cart
+                    cart = [];
+                    updateCart();
+                    
+                    // Close checkout modal after delay
+                    setTimeout(() => {
+                        closeCheckout();
+                    }, 3000);
+                } else {
+                    throw new Error('Submission failed');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Order submission failed. Please try again or contact us directly.', 'error');
+                
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            });
+        });
+    }
+});
+
+// Show checkout success message
+function showCheckoutSuccess() {
+    const checkoutBody = document.querySelector('.checkout-body');
+    const originalContent = checkoutBody.innerHTML;
+    
+    checkoutBody.innerHTML = `
+        <div class="success-message">
+            <i class="fas fa-check-circle"></i>
+            <h3>Order Submitted Successfully!</h3>
+            <p>Thank you for your order. We have received your request and will contact you within 24 hours to confirm the details and arrange delivery.</p>
+            <p><strong>Order Total: $${cartTotal.toLocaleString()}</strong></p>
+        </div>
+    `;
 }
 
 // Show notification
@@ -403,9 +510,15 @@ document.head.appendChild(style);
 
 // Close modal when clicking outside
 window.onclick = function(event) {
-    const modal = document.getElementById('quickViewModal');
-    if (event.target === modal) {
+    const quickViewModal = document.getElementById('quickViewModal');
+    const checkoutModal = document.getElementById('checkoutModal');
+    
+    if (event.target === quickViewModal) {
         closeQuickView();
+    }
+    
+    if (event.target === checkoutModal) {
+        closeCheckout();
     }
 }
 
