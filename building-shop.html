@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Materials Shop - Shockwave Technology</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="shop-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="SHOCKWAVE LOGO-02.png" alt="Shockwave Logo" class="logo-image">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Shop Header -->
+    <section class="shop-header">
+        <div class="container">
+            <div class="shop-header-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> / <a href="index.html#shop">Shop</a> / <span>Building Materials</span>
+                </div>
+                <h1>🏗️ Building Materials</h1>
+                <p>Quality construction and building supplies for your projects</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="productsGrid">
+                <!-- Product 1: Steel Plate -->
+                <div class="product-card" data-id="1" data-name="Steel Plate" data-price="1200" data-image="BUILDING AND CONSTRUCTION/Steel plate.jpeg">
+                    <div class="product-image">
+                        <img src="BUILDING AND CONSTRUCTION/Steel plate.jpeg" alt="Steel Plate">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(1)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Steel Plate</h3>
+                        <p class="product-description">High-quality steel plate for construction and industrial use</p>
+                        <div class="product-price">$1,200</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(1)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Checkered Plate -->
+                <div class="product-card" data-id="2" data-name="Checkered Plate" data-price="950" data-image="BUILDING AND CONSTRUCTION/Checkered plate.jpeg">
+                    <div class="product-image">
+                        <img src="BUILDING AND CONSTRUCTION/Checkered plate.jpeg" alt="Checkered Plate">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(2)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Checkered Plate</h3>
+                        <p class="product-description">Anti-slip checkered plate for flooring and walkways</p>
+                        <div class="product-price">$950</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(2)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Angle Steel -->
+                <div class="product-card" data-id="3" data-name="Angle Steel" data-price="800" data-image="BUILDING AND CONSTRUCTION/Angle steel.jpeg">
+                    <div class="product-image">
+                        <img src="BUILDING AND CONSTRUCTION/Angle steel.jpeg" alt="Angle Steel">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(3)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Angle Steel</h3>
+                        <p class="product-description">Structural angle steel for framing and support</p>
+                        <div class="product-price">$800</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(3)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: Aluminium Ladder -->
+                <div class="product-card" data-id="4" data-name="Aluminium Ladder" data-price="450" data-image="BUILDING AND CONSTRUCTION/Aluminium ladder.jpeg">
+                    <div class="product-image">
+                        <img src="BUILDING AND CONSTRUCTION/Aluminium ladder.jpeg" alt="Aluminium Ladder">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(4)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Aluminium Ladder</h3>
+                        <p class="product-description">Lightweight and durable aluminium ladder for construction</p>
+                        <div class="product-price">$450</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(4)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5: Junction Box -->
+                <div class="product-card" data-id="5" data-name="Junction Box" data-price="180" data-image="BUILDING AND CONSTRUCTION/Junction box.jpeg">
+                    <div class="product-image">
+                        <img src="BUILDING AND CONSTRUCTION/Junction box.jpeg" alt="Junction Box">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(5)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Junction Box</h3>
+                        <p class="product-description">Electrical junction box for safe wiring connections</p>
+                        <div class="product-price">$180</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(5)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeQuickView()">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="SHOCKWAVE LOGO-02.png" alt="Shockwave Logo" class="footer-logo-image">
+                    </div>
+                    <p class="footer-tagline">Sourcing Quality. Delivering Trust.</p>
+                    <p>Your strategic partner in professional supply solutions across Kenya and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#shop">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+254 XXX XXX XXX</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>shockwaveteknologies@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 Shockwave. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="shop-script.js"></script>
+</body>
+</html> 

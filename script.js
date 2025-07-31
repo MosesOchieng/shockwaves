@@ -1125,4 +1125,52 @@ document.addEventListener('DOMContentLoaded', () => {
     initKnowUsCarousel();
 });
 
-console.log('Shockwave website loaded successfully with enhanced features, carousel, chatbot, and quote form!'); 
+// Cookie Consent Functionality
+function showCookieBanner() {
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (cookieBanner && !localStorage.getItem('cookieConsent')) {
+        setTimeout(() => {
+            cookieBanner.classList.add('show');
+        }, 2000);
+    }
+}
+
+function acceptCookies() {
+    localStorage.setItem('cookieConsent', 'accepted');
+    hideCookieBanner();
+    showNotification('Cookies accepted! Thank you for your preference.', 'success');
+}
+
+function declineCookies() {
+    localStorage.setItem('cookieConsent', 'declined');
+    hideCookieBanner();
+    showNotification('Cookies declined. Some features may be limited.', 'info');
+}
+
+function hideCookieBanner() {
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (cookieBanner) {
+        cookieBanner.classList.remove('show');
+    }
+}
+
+// Shop functionality (for main page)
+function goToShop(category) {
+    const shopPages = {
+        'automotive': 'automotive-shop.html',
+        'building': 'building-shop.html',
+        'renewable': 'renewable-shop.html'
+    };
+    
+    if (shopPages[category]) {
+        window.location.href = shopPages[category];
+    }
+}
+
+// Initialize cookie banner when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initKnowUsCarousel();
+    showCookieBanner();
+});
+
+console.log('Shockwave website loaded successfully with enhanced features, carousel, chatbot, quote form, shop, and cookie consent!'); 

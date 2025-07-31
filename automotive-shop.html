@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotive Shop - Shockwave Technology</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="shop-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="SHOCKWAVE LOGO-02.png" alt="Shockwave Logo" class="logo-image">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#about" class="nav-link">About</a></li>
+                <li><a href="index.html#services" class="nav-link">Services</a></li>
+                <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+                <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically added here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount" id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Shop Header -->
+    <section class="shop-header">
+        <div class="container">
+            <div class="shop-header-content">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> / <a href="index.html#shop">Shop</a> / <span>Automotive</span>
+                </div>
+                <h1>🚗 Automotive Products</h1>
+                <p>Premium vehicles and automotive parts for your needs</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products-section">
+        <div class="container">
+            <div class="products-grid" id="productsGrid">
+                <!-- Product 1: Discovery 5 -->
+                <div class="product-card" data-id="1" data-name="Land Rover Discovery 5 HSE 2019" data-price="85000" data-image="AUTOMATIVE/Discovery 5 2019/2019 discovery 5 hse-1.jpg">
+                    <div class="product-image">
+                        <img src="AUTOMATIVE/Discovery 5 2019/2019 discovery 5 hse-1.jpg" alt="Land Rover Discovery 5 HSE 2019">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(1)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Land Rover Discovery 5 HSE 2019</h3>
+                        <p class="product-description">Luxury SUV with premium features and excellent performance</p>
+                        <div class="product-price">$85,000</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(1)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2: Jeep Grand Cherokee -->
+                <div class="product-card" data-id="2" data-name="Jeep Grand Cherokee 2022" data-price="75000" data-image="AUTOMATIVE/Jeep Grand 2022/jeep-grand-1.jpg">
+                    <div class="product-image">
+                        <img src="AUTOMATIVE/Jeep Grand 2022/jeep-grand-1.jpg" alt="Jeep Grand Cherokee 2022" onerror="this.src='https://via.placeholder.com/300x200?text=Jeep+Grand+Cherokee'">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(2)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Jeep Grand Cherokee 2022</h3>
+                        <p class="product-description">Powerful SUV with off-road capabilities</p>
+                        <div class="product-price">$75,000</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(2)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3: Toyota Prado -->
+                <div class="product-card" data-id="3" data-name="Toyota Land Cruiser Prado 2020" data-price="65000" data-image="AUTOMATIVE/Prado 2020/prado-1.jpg">
+                    <div class="product-image">
+                        <img src="AUTOMATIVE/Prado 2020/prado-1.jpg" alt="Toyota Land Cruiser Prado 2020" onerror="this.src='https://via.placeholder.com/300x200?text=Toyota+Prado'">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(3)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Toyota Land Cruiser Prado 2020</h3>
+                        <p class="product-description">Reliable and durable SUV for any terrain</p>
+                        <div class="product-price">$65,000</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(3)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4: Subaru Forester -->
+                <div class="product-card" data-id="4" data-name="Subaru Forester 2021" data-price="45000" data-image="AUTOMATIVE/Subaru Forester/forester-1.jpg">
+                    <div class="product-image">
+                        <img src="AUTOMATIVE/Subaru Forester/forester-1.jpg" alt="Subaru Forester 2021" onerror="this.src='https://via.placeholder.com/300x200?text=Subaru+Forester'">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(4)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Subaru Forester 2021</h3>
+                        <p class="product-description">Safe and efficient crossover with all-wheel drive</p>
+                        <div class="product-price">$45,000</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(4)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5: Toyota Prado 2019 -->
+                <div class="product-card" data-id="5" data-name="Toyota Land Cruiser Prado 2019" data-price="60000" data-image="AUTOMATIVE/Toyota prado 2019/prado-2019-1.jpg">
+                    <div class="product-image">
+                        <img src="AUTOMATIVE/Toyota prado 2019/prado-2019-1.jpg" alt="Toyota Land Cruiser Prado 2019" onerror="this.src='https://via.placeholder.com/300x200?text=Toyota+Prado+2019'">
+                        <div class="product-overlay">
+                            <button class="quick-view-btn" onclick="quickView(5)">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Toyota Land Cruiser Prado 2019</h3>
+                        <p class="product-description">Proven reliability with premium comfort features</p>
+                        <div class="product-price">$60,000</div>
+                        <div class="product-actions">
+                            <button class="add-to-cart-btn" onclick="addToCart(5)">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeQuickView()">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be dynamically loaded -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="SHOCKWAVE LOGO-02.png" alt="Shockwave Logo" class="footer-logo-image">
+                    </div>
+                    <p class="footer-tagline">Sourcing Quality. Delivering Trust.</p>
+                    <p>Your strategic partner in professional supply solutions across Kenya and beyond.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#shop">Shop</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+254 XXX XXX XXX</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>shockwaveteknologies@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p>&copy; 2024 Shockwave. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="shop-script.js"></script>
+</body>
+</html> 
