@@ -976,8 +976,12 @@ function initKnowUsCarousel() {
     const dots = document.querySelectorAll('.know-us-dot');
     const prevBtn = document.querySelector('.know-us-prev');
     const nextBtn = document.querySelector('.know-us-next');
+    const carousel = document.querySelector('.know-us-carousel');
     let currentSlide = 0;
     const totalSlides = 5;
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
 
     function goToSlide(slideIndex) {
         currentSlide = slideIndex;
@@ -1000,6 +1004,78 @@ function initKnowUsCarousel() {
         goToSlide(currentSlide);
     }
 
+    // Touch/Swipe support for mobile
+    function handleTouchStart(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        track.style.transition = 'none';
+    }
+
+    function handleTouchMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.touches[0].clientX;
+        const diff = currentX - startX;
+        const translateX = -currentSlide * 20 + (diff / carousel.offsetWidth) * 20;
+        track.style.transform = `translateX(${translateX}%)`;
+    }
+
+    function handleTouchEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.transition = 'transform 0.5s ease-in-out';
+        
+        const diff = currentX - startX;
+        const threshold = carousel.offsetWidth * 0.3;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        } else {
+            goToSlide(currentSlide);
+        }
+    }
+
+    // Mouse drag support for desktop
+    function handleMouseDown(e) {
+        startX = e.clientX;
+        isDragging = true;
+        track.style.transition = 'none';
+        carousel.style.cursor = 'grabbing';
+    }
+
+    function handleMouseMove(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        currentX = e.clientX;
+        const diff = currentX - startX;
+        const translateX = -currentSlide * 20 + (diff / carousel.offsetWidth) * 20;
+        track.style.transform = `translateX(${translateX}%)`;
+    }
+
+    function handleMouseUp() {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.transition = 'transform 0.5s ease-in-out';
+        carousel.style.cursor = 'grab';
+        
+        const diff = currentX - startX;
+        const threshold = carousel.offsetWidth * 0.3;
+        
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                prevSlide();
+            } else {
+                nextSlide();
+            }
+        } else {
+            goToSlide(currentSlide);
+        }
+    }
+
     // Event listeners
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => goToSlide(index));
@@ -1008,17 +1084,39 @@ function initKnowUsCarousel() {
     prevBtn.addEventListener('click', prevSlide);
     nextBtn.addEventListener('click', nextSlide);
 
-    // Auto-slide every 4 seconds
-    let autoSlideInterval = setInterval(nextSlide, 4000);
+    // Touch events for mobile
+    carousel.addEventListener('touchstart', handleTouchStart, { passive: false });
+    carousel.addEventListener('touchmove', handleTouchMove, { passive: false });
+    carousel.addEventListener('touchend', handleTouchEnd);
 
-    // Pause auto-slide on hover
-    const carousel = document.querySelector('.know-us-carousel');
+    // Mouse events for desktop
+    carousel.addEventListener('mousedown', handleMouseDown);
+    carousel.addEventListener('mousemove', handleMouseMove);
+    carousel.addEventListener('mouseup', handleMouseUp);
+    carousel.addEventListener('mouseleave', handleMouseUp);
+
+    // Prevent context menu on right click
+    carousel.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    // Auto-slide every 5 seconds
+    let autoSlideInterval = setInterval(nextSlide, 5000);
+
+    // Pause auto-slide on interaction
     carousel.addEventListener('mouseenter', () => {
         clearInterval(autoSlideInterval);
     });
 
     carousel.addEventListener('mouseleave', () => {
-        autoSlideInterval = setInterval(nextSlide, 4000);
+        autoSlideInterval = setInterval(nextSlide, 5000);
+    });
+
+    // Pause auto-slide on touch
+    carousel.addEventListener('touchstart', () => {
+        clearInterval(autoSlideInterval);
+    });
+
+    carousel.addEventListener('touchend', () => {
+        autoSlideInterval = setInterval(nextSlide, 5000);
     });
 }
 

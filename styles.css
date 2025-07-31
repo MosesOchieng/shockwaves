@@ -727,6 +727,33 @@ body {
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: grab;
+    user-select: none;
+}
+
+.know-us-carousel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.know-us-carousel:active {
+    cursor: grabbing;
+}
+
+@keyframes carouselFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.know-us-carousel {
+    animation: carouselFadeIn 0.8s ease-out;
 }
 
 .know-us-track {
@@ -746,6 +773,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.know-us-slide img:hover {
+    transform: scale(1.05);
 }
 
 .know-us-dots {
@@ -765,11 +797,18 @@ body {
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: all 0.3s ease;
+    position: relative;
+}
+
+.know-us-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.1);
 }
 
 .know-us-dot.active {
     background: #22c55e;
     transform: scale(1.2);
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
 }
 
 .know-us-nav {
@@ -1023,6 +1062,67 @@ body {
     overflow: hidden;
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     background: #ffffff;
+    height: 300px;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.map-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.map-content {
+    text-align: center;
+    color: white;
+    z-index: 2;
+    position: relative;
+}
+
+.map-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.map-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.map-content p {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.map-coordinates {
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.map-coordinates small {
+    font-size: 0.8rem;
+    opacity: 0.8;
 }
 
 .map-image {
@@ -1363,7 +1463,19 @@ body {
 
     .contact-content {
         grid-template-columns: 1fr;
-        gap: 3rem;
+        gap: 2rem;
+    }
+
+    .contact-map {
+        height: 250px;
+    }
+
+    .map-content h3 {
+        font-size: 1.3rem;
+    }
+
+    .map-content i {
+        font-size: 2.5rem;
     }
 
     .carousel-track .service-card {
@@ -1437,8 +1549,57 @@ body {
         padding: 1.5rem;
     }
 
+    .contact-map {
+        height: 200px;
+    }
+
+    .map-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .map-content i {
+        font-size: 2rem;
+    }
+
+    .map-content p {
+        font-size: 0.9rem;
+    }
+
     .section-header h2 {
         font-size: 2rem;
+    }
+
+    .know-us-carousel {
+        height: 250px;
+        border-radius: 8px;
+    }
+
+    .know-us-nav {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .know-us-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .know-us-text h2 {
+        font-size: 1.8rem;
+    }
+
+    .know-us-text p {
+        font-size: 0.95rem;
+    }
+
+    .quote-box {
+        padding: 1rem;
+        max-width: 95%;
+    }
+
+    .quote-box p {
+        font-size: 1rem;
     }
 }
 
@@ -2054,19 +2215,40 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .know-us-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
     .know-us-carousel {
         height: 300px;
+        border-radius: 12px;
     }
-    
+
     .know-us-nav {
         width: 35px;
         height: 35px;
         font-size: 1rem;
     }
-    
+
     .know-us-dot {
         width: 10px;
         height: 10px;
+    }
+
+    .know-us-text h2 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .know-us-text p {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .quote-box {
+        margin: 0 auto;
+        max-width: 90%;
     }
     
     .form-row {
