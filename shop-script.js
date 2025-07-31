@@ -4,8 +4,11 @@
 let cart = [];
 let cartTotal = 0;
 
-// Product data
-const products = {
+// Detect which shop page we're on
+const currentPage = window.location.pathname.split('/').pop();
+
+// Product data for different shop pages
+const automotiveProducts = {
     1: {
         id: 1,
         name: "Land Rover Discovery 5 HSE 2019",
@@ -17,31 +20,121 @@ const products = {
         id: 2,
         name: "Jeep Grand Cherokee 2022",
         price: 75000,
-        image: "AUTOMATIVE/Jeep Grand 2022/jeep-grand-1.jpg",
+        image: "AUTOMATIVE/Jeep Grand 2022/2022 Jeep Grand Cherokee wine-1.jpg",
         description: "Powerful SUV with off-road capabilities. Features include advanced 4x4 system, premium interior, and cutting-edge safety features."
     },
     3: {
         id: 3,
         name: "Toyota Land Cruiser Prado 2020",
         price: 65000,
-        image: "AUTOMATIVE/Prado 2020/prado-1.jpg",
+        image: "AUTOMATIVE/Prado 2020/2020 Prado bronze-1.jpg",
         description: "Reliable and durable SUV for any terrain. Known for its exceptional reliability, spacious interior, and excellent resale value."
     },
     4: {
         id: 4,
         name: "Subaru Forester 2021",
         price: 45000,
-        image: "AUTOMATIVE/Subaru Forester/forester-1.jpg",
+        image: "AUTOMATIVE/Subaru Forester/Subaru Forester SK9-1.jpg",
         description: "Safe and efficient crossover with all-wheel drive. Features advanced safety systems, fuel efficiency, and versatile cargo space."
     },
     5: {
         id: 5,
         name: "Toyota Land Cruiser Prado 2019",
         price: 60000,
-        image: "AUTOMATIVE/Toyota prado 2019/prado-2019-1.jpg",
+        image: "AUTOMATIVE/Toyota prado 2019/2019 Toyota Prado-1.jpg",
         description: "Proven reliability with premium comfort features. Excellent for both city driving and off-road adventures."
     }
 };
+
+const buildingProducts = {
+    1: {
+        id: 1,
+        name: "Steel Plate",
+        price: 1200,
+        image: "BUILDING AND CONSTRUCTION/Steel plate.jpeg",
+        description: "High-quality steel plate for construction and industrial use. Durable and reliable for structural applications."
+    },
+    2: {
+        id: 2,
+        name: "Checkered Plate",
+        price: 950,
+        image: "BUILDING AND CONSTRUCTION/Checkered plate.jpeg",
+        description: "Anti-slip checkered plate for flooring and walkways. Provides excellent traction and safety."
+    },
+    3: {
+        id: 3,
+        name: "Angle Steel",
+        price: 800,
+        image: "BUILDING AND CONSTRUCTION/Angle steel.jpeg",
+        description: "Structural angle steel for framing and support. Essential for construction projects."
+    },
+    4: {
+        id: 4,
+        name: "Aluminium Ladder",
+        price: 450,
+        image: "BUILDING AND CONSTRUCTION/Aluminium ladder.jpeg",
+        description: "Lightweight and durable aluminium ladder for construction. Safe and easy to use."
+    },
+    5: {
+        id: 5,
+        name: "Junction Box",
+        price: 180,
+        image: "BUILDING AND CONSTRUCTION/Junction box.jpeg",
+        description: "Electrical junction box for safe wiring connections. Meets safety standards."
+    }
+};
+
+const renewableProducts = {
+    1: {
+        id: 1,
+        name: "Solar LED Lights",
+        price: 350,
+        image: "RENEWAL ENERGY/solar led lights/WhatsApp Image 2025-06-20 at 12.47.35_6bcbfe24.jpg",
+        description: "Energy-efficient solar-powered LED lighting system. Perfect for outdoor lighting needs."
+    },
+    2: {
+        id: 2,
+        name: "Solar Flood Lights",
+        price: 280,
+        image: "RENEWAL ENERGY/solar flood lights/WhatsApp Image 2025-06-20 at 12.47.38_738f8eb9.jpg",
+        description: "High-intensity solar flood lights for security and outdoor lighting. Bright and reliable."
+    },
+    3: {
+        id: 3,
+        name: "Solar Outdoor Light",
+        price: 220,
+        image: "RENEWAL ENERGY/solar outdoor light/WhatsApp Image 2025-06-20 at 12.47.36_180720a0.jpg",
+        description: "Elegant solar outdoor lighting for gardens and pathways. Beautiful and functional."
+    },
+    4: {
+        id: 4,
+        name: "Solar Stick Light",
+        price: 180,
+        image: "RENEWAL ENERGY/solar stick light/WhatsApp Image 2025-06-20 at 12.47.36_f1c21bb6.jpg",
+        description: "Compact solar stick lights for decorative and functional lighting. Versatile design."
+    },
+    5: {
+        id: 5,
+        name: "Solar Firestick Light",
+        price: 150,
+        image: "RENEWAL ENERGY/solar firestick light/WhatsApp Image 2025-06-20 at 12.47.33_ddb1a819.jpg",
+        description: "Innovative solar firestick lights for unique lighting effects. Creative and energy-efficient."
+    }
+};
+
+// Get the correct product data based on current page
+function getProducts() {
+    if (currentPage === 'automotive-shop.html') {
+        return automotiveProducts;
+    } else if (currentPage === 'building-shop.html') {
+        return buildingProducts;
+    } else if (currentPage === 'renewable-shop.html') {
+        return renewableProducts;
+    }
+    return {};
+}
+
+const products = getProducts();
 
 // Initialize cart from localStorage
 function initCart() {
